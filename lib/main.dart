@@ -80,6 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 2:
         page = Placeholder();
         break;
+      case 3:
+        page = Placeholder();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -97,12 +100,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: Text('Home'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
+                    icon: Icon(Icons.account_circle_sharp),
+                    label: Text('Application users'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.android),
-                    label: Text('Test'),
+                    icon: Icon(Icons.dashboard),
+                    label: Text('Suggestions'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.list),
+                    label: Text('Suggestion types'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
@@ -126,7 +133,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
 class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -144,26 +150,35 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
+          Card(
+            elevation: 4.0,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.favorite,
+                    size: 32.0,
+                  ),
+                  SizedBox(width: 16.0),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Application users',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                    ],
+                  ),
+                ],
               ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
+            ),
           ),
         ],
       ),
@@ -176,25 +191,31 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    if (appState.favorites.isEmpty) {
+    // if (appState.favorites.isEmpty) {
       return Center(
-        child: Text('No favorites yet.'),
+        child: ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Переход на эдит форму'),
+              ),
+        // child: Text('No favorites yet.'),
       );
-    }
+    // }
 
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text('You have '
-              '${appState.favorites.length} favorites:'),
-        ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
-      ],
-    );
+    // return ListView(
+    //   children: [
+    //     Padding(
+    //       padding: const EdgeInsets.all(20),
+    //       child: Text('You have '
+    //           '${appState.favorites.length} favorites:'),
+    //     ),
+    //     for (var pair in appState.favorites)
+    //       ListTile(
+    //         leading: Icon(Icons.favorite),
+    //         title: Text(pair.asLowerCase),
+    //       ),
+    //   ],
+    // );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'cardWidget.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,63 +19,42 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 4, 176, 244)),
         ),
-        home: MyHomePage(),
+        home: NavigationLayout(),
       ),
     );
   }
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
+  
 }
 
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
+class NavigationLayout extends StatefulWidget {
+  final int selectedIndex;
 
-  final WordPair pair;
+  NavigationLayout({this.selectedIndex = 0});
+  @override
+  _NavigationLayoutState createState() => _NavigationLayoutState();
+}
+
+class _NavigationLayoutState extends State<NavigationLayout> {
+  late int _selectedIndex;
 
   @override
-  Widget build(BuildContext context) {
-    return Text(pair.asLowerCase);
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex;
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     Widget page;
-    switch (selectedIndex) {
+    switch (_selectedIndex) {
       case 0:
-        page = GeneratorPage();
+        page = HomePage();
         break;
       case 1:
-        page = FavoritesPage();
+        page = ApplicationUsersPage(context);
         break;
       case 2:
         page = Placeholder();
@@ -84,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Placeholder();
         break;
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        throw UnimplementedError('no widget for $_selectedIndex');
     }
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -93,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             SafeArea(
               child: NavigationRail(
-                extended: constraints.maxWidth >= 600,  // ← Here.
+                extended: constraints.maxWidth >= 600,
                 destinations: [
                   NavigationRailDestination(
                     icon: Icon(Icons.home),
@@ -112,10 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: Text('Suggestion types'),
                   ),
                 ],
-                selectedIndex: selectedIndex,
+                selectedIndex: _selectedIndex,
                 onDestinationSelected: (value) {
                   setState(() {
-                    selectedIndex = value;
+                    _selectedIndex = value;
                   });
                 },
               ),
@@ -132,52 +111,61 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 }
-
-class GeneratorPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
+    return Padding(
+      padding: EdgeInsets.all(8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            elevation: 4.0,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.favorite,
-                    size: 32.0,
-                  ),
-                  SizedBox(width: 16.0),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Application users',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                    ],
-                  ),
-                ],
+          Padding(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Text(
+              'Home',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              children: [
+                CardWidget(
+                  icon: Icons.account_circle_sharp,
+                  title: 'Application users',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationLayout(selectedIndex: 1)),
+                    );
+                  },
+                ),
+                CardWidget(
+                  icon: Icons.dashboard,
+                  title: 'Suggestions',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationLayout(selectedIndex: 2)),
+                    );
+                  },
+                ),
+                CardWidget(
+                  icon: Icons.list,
+                  title: 'Suggestion Types',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationLayout(selectedIndex: 3)),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],
@@ -186,36 +174,25 @@ class GeneratorPage extends StatelessWidget {
   }
 }
 
-class FavoritesPage extends StatelessWidget {
+class ApplicationUsersPage extends StatelessWidget {
+  final BuildContext context;
+
+  ApplicationUsersPage(this.context);
+
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    // if (appState.favorites.isEmpty) {
-      return Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Application users'),
+      ),
+      body: Center(
         child: ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Переход на эдит форму'),
-              ),
-        // child: Text('No favorites yet.'),
-      );
-    // }
+          onPressed: () {
 
-    // return ListView(
-    //   children: [
-    //     Padding(
-    //       padding: const EdgeInsets.all(20),
-    //       child: Text('You have '
-    //           '${appState.favorites.length} favorites:'),
-    //     ),
-    //     for (var pair in appState.favorites)
-    //       ListTile(
-    //         leading: Icon(Icons.favorite),
-    //         title: Text(pair.asLowerCase),
-    //       ),
-    //   ],
-    // );
+          },
+          child: Text('Переход на эдит форму'),
+        ),
+      ),
+    );
   }
 }

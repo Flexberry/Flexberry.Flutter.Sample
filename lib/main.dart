@@ -238,3 +238,30 @@ class ApplicationUsersPage extends StatelessWidget {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+
+// import 'services/router_service.dart';
+
+// class Application extends StatelessWidget {
+//   const Application({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp.router(
+//       title: 'Flexberry.Flutter.Sample',
+//       routerConfig: NavigationManager.router,
+//       theme: ThemeData(
+//         useMaterial3: true,
+//         colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 4, 176, 244)),
+//       ),
+//     );
+//   }
+// }
+
+// void main() {
+//   // Init router
+//   NavigationManager.instance;
+
+//   runApp(const Application());
+// }

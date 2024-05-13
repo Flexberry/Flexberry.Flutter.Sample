@@ -1,0 +1,389 @@
+# backend.api.EmberFlexberryDummyLazyLoadingDetailsApi
+
+## Load the API package
+```dart
+import 'package:backend/api.dart';
+```
+
+All URIs are relative to *https://localhost/service-root*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**emberFlexberryDummyLazyLoadingDetailsGet**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingdetailsget) | **GET** /EmberFlexberryDummyLazyLoadingDetails | Get entities from EmberFlexberryDummyLazyLoadingDetails
+[**emberFlexberryDummyLazyLoadingDetailsPost**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingdetailspost) | **POST** /EmberFlexberryDummyLazyLoadingDetails | Add new entity to EmberFlexberryDummyLazyLoadingDetails
+[**emberFlexberryDummyLazyLoadingDetailsPrimaryKeyDelete**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingdetailsprimarykeydelete) | **DELETE** /EmberFlexberryDummyLazyLoadingDetails({__PrimaryKey}) | Delete entity from EmberFlexberryDummyLazyLoadingDetails
+[**emberFlexberryDummyLazyLoadingDetailsPrimaryKeyGet**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingdetailsprimarykeyget) | **GET** /EmberFlexberryDummyLazyLoadingDetails({__PrimaryKey}) | Get entity from EmberFlexberryDummyLazyLoadingDetails by key
+[**emberFlexberryDummyLazyLoadingDetailsPrimaryKeyLazyLoadingMasterGet**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingdetailsprimarykeylazyloadingmasterget) | **GET** /EmberFlexberryDummyLazyLoadingDetails({__PrimaryKey})/LazyLoadingMaster | Get related LazyLoadingMaster
+[**emberFlexberryDummyLazyLoadingDetailsPrimaryKeyPatch**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingdetailsprimarykeypatch) | **PATCH** /EmberFlexberryDummyLazyLoadingDetails({__PrimaryKey}) | Update entity in EmberFlexberryDummyLazyLoadingDetails
+[**emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailGet**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingmastersprimarykeylazyloadingdetailget) | **GET** /EmberFlexberryDummyLazyLoadingMasters({__PrimaryKey})/LazyLoadingDetail | Get entities from related LazyLoadingDetail
+[**emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailPost**](EmberFlexberryDummyLazyLoadingDetailsApi.md#emberflexberrydummylazyloadingmastersprimarykeylazyloadingdetailpost) | **POST** /EmberFlexberryDummyLazyLoadingMasters({__PrimaryKey})/LazyLoadingDetail | Add new entity to related LazyLoadingDetail
+
+
+# **emberFlexberryDummyLazyLoadingDetailsGet**
+> CollectionOfLazyLoadingDetail emberFlexberryDummyLazyLoadingDetailsGet(dollarTop, dollarSkip, dollarSearch, dollarFilter, dollarCount, dollarOrderby, dollarSelect, dollarExpand)
+
+Get entities from EmberFlexberryDummyLazyLoadingDetails
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final int dollarTop = 50; // int | Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)
+final int dollarSkip = 56; // int | Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)
+final String dollarSearch = dollarSearch_example; // String | Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)
+final String dollarFilter = dollarFilter_example; // String | Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)
+final bool dollarCount = true; // bool | Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)
+final BuiltSet<String> dollarOrderby = ; // BuiltSet<String> | Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)
+final BuiltSet<String> dollarSelect = ; // BuiltSet<String> | Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)
+final BuiltSet<String> dollarExpand = ; // BuiltSet<String> | Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)
+
+try {
+    final response = api.emberFlexberryDummyLazyLoadingDetailsGet(dollarTop, dollarSkip, dollarSearch, dollarFilter, dollarCount, dollarOrderby, dollarSelect, dollarExpand);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingDetailsGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **dollarTop** | **int**| Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop) | [optional] 
+ **dollarSkip** | **int**| Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip) | [optional] 
+ **dollarSearch** | **String**| Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch) | [optional] 
+ **dollarFilter** | **String**| Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) | [optional] 
+ **dollarCount** | **bool**| Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount) | [optional] 
+ **dollarOrderby** | [**BuiltSet&lt;String&gt;**](String.md)| Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby) | [optional] 
+ **dollarSelect** | [**BuiltSet&lt;String&gt;**](String.md)| Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect) | [optional] 
+ **dollarExpand** | [**BuiltSet&lt;String&gt;**](String.md)| Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand) | [optional] 
+
+### Return type
+
+[**CollectionOfLazyLoadingDetail**](CollectionOfLazyLoadingDetail.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingDetailsPost**
+> EmberFlexberryDummyLazyLoadingDetail emberFlexberryDummyLazyLoadingDetailsPost(emberFlexberryDummyLazyLoadingDetailCreate)
+
+Add new entity to EmberFlexberryDummyLazyLoadingDetails
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final EmberFlexberryDummyLazyLoadingDetailCreate emberFlexberryDummyLazyLoadingDetailCreate = ; // EmberFlexberryDummyLazyLoadingDetailCreate | New entity
+
+try {
+    final response = api.emberFlexberryDummyLazyLoadingDetailsPost(emberFlexberryDummyLazyLoadingDetailCreate);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingDetailsPost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **emberFlexberryDummyLazyLoadingDetailCreate** | [**EmberFlexberryDummyLazyLoadingDetailCreate**](EmberFlexberryDummyLazyLoadingDetailCreate.md)| New entity | 
+
+### Return type
+
+[**EmberFlexberryDummyLazyLoadingDetail**](EmberFlexberryDummyLazyLoadingDetail.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingDetailsPrimaryKeyDelete**
+> emberFlexberryDummyLazyLoadingDetailsPrimaryKeyDelete(primaryKey)
+
+Delete entity from EmberFlexberryDummyLazyLoadingDetails
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final String primaryKey = 01234567-89ab-cdef-0123-456789abcdef; // String | key: __PrimaryKey
+
+try {
+    api.emberFlexberryDummyLazyLoadingDetailsPrimaryKeyDelete(primaryKey);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingDetailsPrimaryKeyDelete: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **primaryKey** | **String**| key: __PrimaryKey | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingDetailsPrimaryKeyGet**
+> EmberFlexberryDummyLazyLoadingDetail emberFlexberryDummyLazyLoadingDetailsPrimaryKeyGet(primaryKey, dollarSelect, dollarExpand)
+
+Get entity from EmberFlexberryDummyLazyLoadingDetails by key
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final String primaryKey = 01234567-89ab-cdef-0123-456789abcdef; // String | key: __PrimaryKey
+final BuiltSet<String> dollarSelect = ; // BuiltSet<String> | Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)
+final BuiltSet<String> dollarExpand = ; // BuiltSet<String> | Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)
+
+try {
+    final response = api.emberFlexberryDummyLazyLoadingDetailsPrimaryKeyGet(primaryKey, dollarSelect, dollarExpand);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingDetailsPrimaryKeyGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **primaryKey** | **String**| key: __PrimaryKey | 
+ **dollarSelect** | [**BuiltSet&lt;String&gt;**](String.md)| Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect) | [optional] 
+ **dollarExpand** | [**BuiltSet&lt;String&gt;**](String.md)| Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand) | [optional] 
+
+### Return type
+
+[**EmberFlexberryDummyLazyLoadingDetail**](EmberFlexberryDummyLazyLoadingDetail.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingDetailsPrimaryKeyLazyLoadingMasterGet**
+> EmberFlexberryDummyLazyLoadingMaster emberFlexberryDummyLazyLoadingDetailsPrimaryKeyLazyLoadingMasterGet(primaryKey, dollarSelect, dollarExpand)
+
+Get related LazyLoadingMaster
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final String primaryKey = 01234567-89ab-cdef-0123-456789abcdef; // String | key: __PrimaryKey
+final BuiltSet<String> dollarSelect = ; // BuiltSet<String> | Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)
+final BuiltSet<String> dollarExpand = ; // BuiltSet<String> | Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)
+
+try {
+    final response = api.emberFlexberryDummyLazyLoadingDetailsPrimaryKeyLazyLoadingMasterGet(primaryKey, dollarSelect, dollarExpand);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingDetailsPrimaryKeyLazyLoadingMasterGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **primaryKey** | **String**| key: __PrimaryKey | 
+ **dollarSelect** | [**BuiltSet&lt;String&gt;**](String.md)| Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect) | [optional] 
+ **dollarExpand** | [**BuiltSet&lt;String&gt;**](String.md)| Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand) | [optional] 
+
+### Return type
+
+[**EmberFlexberryDummyLazyLoadingMaster**](EmberFlexberryDummyLazyLoadingMaster.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingDetailsPrimaryKeyPatch**
+> emberFlexberryDummyLazyLoadingDetailsPrimaryKeyPatch(primaryKey, emberFlexberryDummyLazyLoadingDetailUpdate)
+
+Update entity in EmberFlexberryDummyLazyLoadingDetails
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final String primaryKey = 01234567-89ab-cdef-0123-456789abcdef; // String | key: __PrimaryKey
+final EmberFlexberryDummyLazyLoadingDetailUpdate emberFlexberryDummyLazyLoadingDetailUpdate = ; // EmberFlexberryDummyLazyLoadingDetailUpdate | New property values
+
+try {
+    api.emberFlexberryDummyLazyLoadingDetailsPrimaryKeyPatch(primaryKey, emberFlexberryDummyLazyLoadingDetailUpdate);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingDetailsPrimaryKeyPatch: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **primaryKey** | **String**| key: __PrimaryKey | 
+ **emberFlexberryDummyLazyLoadingDetailUpdate** | [**EmberFlexberryDummyLazyLoadingDetailUpdate**](EmberFlexberryDummyLazyLoadingDetailUpdate.md)| New property values | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailGet**
+> CollectionOfLazyLoadingDetail emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailGet(primaryKey, dollarTop, dollarSkip, dollarSearch, dollarFilter, dollarCount, dollarOrderby, dollarSelect, dollarExpand)
+
+Get entities from related LazyLoadingDetail
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final String primaryKey = 01234567-89ab-cdef-0123-456789abcdef; // String | key: __PrimaryKey
+final int dollarTop = 50; // int | Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)
+final int dollarSkip = 56; // int | Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)
+final String dollarSearch = dollarSearch_example; // String | Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)
+final String dollarFilter = dollarFilter_example; // String | Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)
+final bool dollarCount = true; // bool | Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)
+final BuiltSet<String> dollarOrderby = ; // BuiltSet<String> | Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)
+final BuiltSet<String> dollarSelect = ; // BuiltSet<String> | Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)
+final BuiltSet<String> dollarExpand = ; // BuiltSet<String> | Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)
+
+try {
+    final response = api.emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailGet(primaryKey, dollarTop, dollarSkip, dollarSearch, dollarFilter, dollarCount, dollarOrderby, dollarSelect, dollarExpand);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **primaryKey** | **String**| key: __PrimaryKey | 
+ **dollarTop** | **int**| Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop) | [optional] 
+ **dollarSkip** | **int**| Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip) | [optional] 
+ **dollarSearch** | **String**| Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch) | [optional] 
+ **dollarFilter** | **String**| Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter) | [optional] 
+ **dollarCount** | **bool**| Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount) | [optional] 
+ **dollarOrderby** | [**BuiltSet&lt;String&gt;**](String.md)| Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby) | [optional] 
+ **dollarSelect** | [**BuiltSet&lt;String&gt;**](String.md)| Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect) | [optional] 
+ **dollarExpand** | [**BuiltSet&lt;String&gt;**](String.md)| Expand related entities, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand) | [optional] 
+
+### Return type
+
+[**CollectionOfLazyLoadingDetail**](CollectionOfLazyLoadingDetail.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailPost**
+> EmberFlexberryDummyLazyLoadingDetail emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailPost(primaryKey, emberFlexberryDummyLazyLoadingDetailCreate)
+
+Add new entity to related LazyLoadingDetail
+
+### Example
+```dart
+import 'package:backend/api.dart';
+
+final api = Backend().getEmberFlexberryDummyLazyLoadingDetailsApi();
+final String primaryKey = 01234567-89ab-cdef-0123-456789abcdef; // String | key: __PrimaryKey
+final EmberFlexberryDummyLazyLoadingDetailCreate emberFlexberryDummyLazyLoadingDetailCreate = ; // EmberFlexberryDummyLazyLoadingDetailCreate | New entity
+
+try {
+    final response = api.emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailPost(primaryKey, emberFlexberryDummyLazyLoadingDetailCreate);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling EmberFlexberryDummyLazyLoadingDetailsApi->emberFlexberryDummyLazyLoadingMastersPrimaryKeyLazyLoadingDetailPost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **primaryKey** | **String**| key: __PrimaryKey | 
+ **emberFlexberryDummyLazyLoadingDetailCreate** | [**EmberFlexberryDummyLazyLoadingDetailCreate**](EmberFlexberryDummyLazyLoadingDetailCreate.md)| New entity | 
+
+### Return type
+
+[**EmberFlexberryDummyLazyLoadingDetail**](EmberFlexberryDummyLazyLoadingDetail.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

@@ -7,6 +7,7 @@ import 'package:backend/backend.dart';
 import 'package:dio/dio.dart';
 
 import 'data_service.dart';
+import 'package:flexberry_flutter_sample/utils/theme/theme.dart';
 
 void main() {
   const url = 'http://localhost:6500/odata/';
@@ -46,10 +47,9 @@ class MyApp extends StatelessWidget {
       create: (context) => MyAppState(),
       child: MaterialApp(
         title: 'Flexberry.Flutter.Sample',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 4, 176, 244)),
-        ),
+        themeMode: ThemeMode.system,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
         home: MyHomePage(dataService: dataService),
       ),
     );

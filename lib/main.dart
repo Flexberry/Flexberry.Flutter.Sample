@@ -1,5 +1,4 @@
 // Openapi Generator last run: : 2024-05-08T12:15:36.398982
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
@@ -8,6 +7,7 @@ import 'package:dio/dio.dart';
 
 import 'data_service.dart';
 import 'package:flexberry_flutter_sample/utils/theme/theme.dart';
+import 'cardWidget.dart';
 
 void main() {
   const url = 'http://localhost:6500/odata/';
@@ -50,45 +50,54 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: MyHomePage(dataService: dataService),
+        home: NavigationLayout(dataService: dataService),
       ),
     );
   }
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
+
 }
 
-class MyHomePage extends StatefulWidget {
+class NavigationLayout extends StatefulWidget {
+  final int selectedIndex;
+  @override
+  _NavigationLayoutState createState() => _NavigationLayoutState();
   final DataService dataService;
-  const MyHomePage({
+  const NavigationLayout({
     super.key,
-    required this.dataService,
+    required this.dataService, this.selectedIndex = 0
   });
+}
+
+class _NavigationLayoutState extends State<NavigationLayout> {
+  late int _selectedIndex;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget page;
-    switch (selectedIndex) {
+    switch (_selectedIndex) {
       case 0:
-        page = GeneratorPage(dataService: widget.dataService);
+        page = HomePage(dataService: widget.dataService);
         break;
       case 1:
-        page = FavoritesPage();
+        page = ApplicationUsersPage(context);
         break;
       case 2:
         page = Placeholder();
         break;
+      case 3:
+        page = Placeholder();
+        break;
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        throw UnimplementedError('no widget for $_selectedIndex');
     }
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -104,18 +113,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: Text('Home'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
+                    icon: Icon(Icons.account_circle_sharp),
+                    label: Text('Application users'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.android),
-                    label: Text('Test'),
+                    icon: Icon(Icons.dashboard),
+                    label: Text('Suggestions'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.list),
+                    label: Text('Suggestion types'),
                   ),
                 ],
-                selectedIndex: selectedIndex,
+                selectedIndex: _selectedIndex,
                 onDestinationSelected: (value) {
                   setState(() {
-                    selectedIndex = value;
+                    _selectedIndex = value;
                   });
                 },
               ),
@@ -134,30 +147,68 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-class GeneratorPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   final DataService dataService;
-  const GeneratorPage({
+  const HomePage({
     super.key,
     required this.dataService,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: EdgeInsets.all(8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  dataService.getUsers();
-                },
-                child: Text('Next'),
+          Padding(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Text(
+              'Home',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
               ),
-            ],
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              children: [
+                CardWidget(
+                  icon: Icons.account_circle_sharp,
+                  title: 'Application users',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationLayout(dataService: dataService, selectedIndex: 1)),
+                    );
+                  },
+                ),
+                CardWidget(
+                  icon: Icons.dashboard,
+                  title: 'Suggestions',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationLayout(dataService: dataService, selectedIndex: 2)),
+                    );
+                  },
+                ),
+                CardWidget(
+                  icon: Icons.list,
+                  title: 'Suggestion Types',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NavigationLayout(dataService: dataService, selectedIndex: 3)),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -165,11 +216,25 @@ class GeneratorPage extends StatelessWidget {
   }
 }
 
-class FavoritesPage extends StatelessWidget {
+class ApplicationUsersPage extends StatelessWidget {
+  final BuildContext context;
+
+  ApplicationUsersPage(this.context);
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('No favorites yet.'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Application users'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+
+          },
+          child: Text('Переход на эдит форму'),
+        ),
+      ),
     );
   }
 }

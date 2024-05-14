@@ -26,12 +26,14 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
           NavigationBar(
             selectedIndex: _selectedIndex.value,
             onDestinationSelected: (index) {
-              widget.navigationShell.goBranch(
-                index,
-                initialLocation: index == widget.navigationShell.currentIndex,
-              );
+              if (widget.navigationShell.route.branches.length > index) {
+                widget.navigationShell.goBranch(
+                  index,
+                  initialLocation: index == widget.navigationShell.currentIndex,
+                );
+              }
               setState(() {
-                _selectedIndex.value = index;
+                  _selectedIndex.value = index;
               });
             },
             destinations: [

@@ -11,6 +11,7 @@ class NavigationManager {
   static NavigationManager? _instance;
   static late GoRouter router;
   static late DataService _dataService;
+  static final ValueNotifier<int> selectedIndexNotifier = ValueNotifier<int>(0);
 
   final GlobalKey<NavigatorState> parentNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> homeTabNavigatorKey = GlobalKey<NavigatorState>();
@@ -90,6 +91,32 @@ class NavigationManager {
         ],
       ),
     ];
+  }
+
+  static void updateSelectedIndex(int index) {
+    final routes = _instance!._routes();
+    if (index >= 0 && index < routes.length) {
+      selectedIndexNotifier.value = index;
+    }
+  }
+
+  static int findBranchIndex(String path) {
+    final routes = _instance!._routes();
+    for (int i = 0; i < routes.length; i++) {
+      final branch = routes[i];
+      for (final route in branch.routes) {
+        final goRoute = route as GoRoute;
+        if (goRoute.path == path) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
+
+  static int getBranchCount() {
+    final routes = _instance!._routes();
+    return routes.length;
   }
 
   static Page getPage({

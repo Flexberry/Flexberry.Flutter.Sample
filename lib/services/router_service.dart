@@ -74,7 +74,7 @@ class NavigationManager {
             path: '/application-user',
             pageBuilder: (context, GoRouterState state) {
               return getPage(
-                child: const ApplicationUser(),
+                child: ApplicationUser(dataService: _dataService),
                 state: state,
               );
             },

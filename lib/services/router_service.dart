@@ -5,13 +5,28 @@ import '../ui/pages/application_user/application_user.dart';
 import '../ui/pages/application_user/application_user_edit_form.dart';
 import '../ui/pages/bottom_navigation_page.dart';
 import '../ui/pages/home_page.dart';
+import 'data_service.dart';
 
 class NavigationManager {
-  factory NavigationManager() {
-    return _instance;
+  static NavigationManager? _instance;
+  static late GoRouter router;
+  static late DataService _dataService;
+
+  final GlobalKey<NavigatorState> parentNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> homeTabNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> applicationUserTabNavigatorKey = GlobalKey<NavigatorState>();
+
+  NavigationManager._internal();
+
+  static void init(DataService dataService) {
+    if (_instance == null) {
+      _instance = NavigationManager._internal();
+      _dataService = dataService;
+      _instance!._initializeRouter();
+    }
   }
 
-  NavigationManager._internal() {
+  void _initializeRouter() {
     final routes = [
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: parentNavigatorKey,
@@ -38,16 +53,6 @@ class NavigationManager {
     );
   }
 
-  static final NavigationManager _instance = NavigationManager._internal();
-
-  static NavigationManager get instance => _instance;
-
-  static late final GoRouter router;
-
-  static final GlobalKey<NavigatorState> parentNavigatorKey = GlobalKey<NavigatorState>();
-  static final GlobalKey<NavigatorState> homeTabNavigatorKey = GlobalKey<NavigatorState>();
-  static final GlobalKey<NavigatorState> applicationUserTabNavigatorKey = GlobalKey<NavigatorState>();
-
   List<StatefulShellBranch> _routes() {
     return [
       StatefulShellBranch(
@@ -55,12 +60,9 @@ class NavigationManager {
         routes: [
           GoRoute(
             path: '/',
-            pageBuilder: (context, GoRouterState state) {
-              return getPage(
-                child: const HomePage(),
-                state: state,
-              );
-            },
+            builder: (context, state) => HomePage(
+              dataService: _dataService,
+            ),
           ),
         ],
       ),
@@ -79,6 +81,7 @@ class NavigationManager {
               GoRoute(
                 path: 'edit-form/:id',
                 builder: (context, state) => ApplicationUserEditForm(
+                  dataService: _dataService,
                   applicationUserId: state.pathParameters['id'].toString(),
                 ),
               ),

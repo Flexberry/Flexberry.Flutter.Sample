@@ -1,49 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import '../../cardWidget.dart';
+import '../../services/data_service.dart';
+import '../../services/router_service.dart';
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+class HomePage extends StatelessWidget {
+  final DataService dataService;
 
-class _HomePageState extends State<HomePage> {
-  int selectedIndex = 0;
+  const HomePage({
+    super.key,
+    required this.dataService,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: EdgeInsets.all(8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            elevation: 4.0,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.favorite,
-                    size: 32.0,
-                  ),
-                  SizedBox(width: 16.0),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Application users',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                    ],
-                  ),
-                ],
+          Padding(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Text(
+              'Home',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+              children: [
+                CardWidget(
+                  icon: Icons.account_circle_sharp,
+                  title: 'Application users',
+                  onTap: () {
+                     NavigationManager.router.go('/application-user');
+                  },
+                ),
+                CardWidget(
+                  icon: Icons.dashboard,
+                  title: 'Suggestions',
+                  onTap: () {
+                  },
+                ),
+                CardWidget(
+                  icon: Icons.list,
+                  title: 'Suggestion Types',
+                  onTap: () {
+                  },
+                ),
+              ],
             ),
           ),
         ],

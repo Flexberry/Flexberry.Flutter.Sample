@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../../enums/gender.dart';
+import '../../../services/data_service.dart';
 import '../../widgets/flexberry_checkbox.dart';
 import '../../widgets/flexberry_dropdown.dart';
 import '../../widgets/flexberry_field.dart';
 import '../../widgets/flexberry_simpledatetime.dart';
 
 class ApplicationUserEditForm extends StatefulWidget {
+  final DataService dataService;
   final String applicationUserId;
-  
+
   const ApplicationUserEditForm({
     super.key,
+    required this.dataService,
     required this.applicationUserId
   });
 

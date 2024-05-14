@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../services/router_service.dart';
+
 class BottomNavigationPage extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -14,8 +16,6 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  final _selectedIndex = ValueNotifier<int>(0);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,17 +24,17 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           NavigationBar(
-            selectedIndex: _selectedIndex.value,
+            selectedIndex: NavigationManager.selectedIndexNotifier.value,
             onDestinationSelected: (index) {
-              if (widget.navigationShell.route.branches.length > index) {
+              if (index >= 0 && NavigationManager.getBranchCount() > index) {
                 widget.navigationShell.goBranch(
                   index,
                   initialLocation: index == widget.navigationShell.currentIndex,
                 );
+                setState(() {
+                  NavigationManager.updateSelectedIndex(index);
+                });
               }
-              setState(() {
-                  _selectedIndex.value = index;
-              });
             },
             destinations: [
               NavigationDestination(

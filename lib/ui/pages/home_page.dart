@@ -39,7 +39,9 @@ class HomePage extends StatelessWidget {
                   icon: Icons.account_circle_sharp,
                   title: 'Application users',
                   onTap: () {
-                     NavigationManager.router.go('/application-user');
+                    final branchIndex = NavigationManager.findBranchIndex('/application-user');
+                    NavigationManager.updateSelectedIndex(branchIndex);
+                    NavigationManager.router.go('/application-user');
                   },
                 ),
                 CardWidget(

@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-
 import '../../../services/data_service.dart';
 
-class SuggestionEditForm extends StatefulWidget {
+class SuggestionTypeEditForm extends StatefulWidget {
   final DataService dataService;
-  final String suggestionId;
+  final String suggestionTypeId;
 
-  const SuggestionEditForm({
+  const SuggestionTypeEditForm({
     super.key,
     required this.dataService,
-    required this.suggestionId
+    required this.suggestionTypeId
   });
 
   @override
-  State<SuggestionEditForm> createState() => _SuggestionEditFormState();
+  State<SuggestionTypeEditForm> createState() => _SuggestionTypeEditFormState();
 }
 
-class _SuggestionEditFormState extends State<SuggestionEditForm> {
+class _SuggestionTypeEditFormState extends State<SuggestionTypeEditForm> {
   @override
   void initState() {
     super.initState();
@@ -29,14 +28,14 @@ class _SuggestionEditFormState extends State<SuggestionEditForm> {
         title: Column(
           children: [
             const Text(
-              'Suggestion',
+              'Suggestion Type',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 13,
               ),
             ),
             Text(
-              widget.suggestionId,
+              widget.suggestionTypeId,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -71,7 +70,7 @@ class _SuggestionEditFormState extends State<SuggestionEditForm> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      
+
                     ],
                   ),
                 ),

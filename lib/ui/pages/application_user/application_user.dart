@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../services/router_service.dart';
 import '../../../services/data_service.dart';
+import '../../../viewmodel/application_user_view_model.dart';
+import '../../widgets/flexberry_table.dart';
 
 class ApplicationUser extends StatefulWidget {
   final DataService dataService;
@@ -13,7 +14,7 @@ class ApplicationUser extends StatefulWidget {
 }
 
 class _ApplicationUserState extends State<ApplicationUser> {
-  String _userData = 'Загрузка...';
+  late ApplicationUserViewModel viewModel;
 
   @override
   void initState() {
@@ -25,31 +26,16 @@ class _ApplicationUserState extends State<ApplicationUser> {
     try {
       final userData = await widget.dataService.getUsers();
       setState(() {
-        _userData = userData.toString();
+        viewModel = ApplicationUserViewModel(userData);
       });
-    } catch (e) {
-      setState(() {
-        _userData = 'Ошибка: $e';
-      });
-    }
+    } catch (e) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () => NavigationManager.router.go(
-              '/application-user/edit-form/1',
-            ),
-            child: Text('Переход на эдит форму'),
-          ),
-          SizedBox(height: 16.0),
-          Text(_userData),
-        ],
-      ),
+    return FlexberryTable(
+      viewModel: viewModel,
+      editFormRoute: 'application-user/edit-form',
     );
   }
 }

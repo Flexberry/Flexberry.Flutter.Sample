@@ -20,25 +20,38 @@ class FlexberrySimpledatetime extends StatefulWidget {
 }
 
 class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
-  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
-    DateTime selectedDate;
+  final DateFormat _dateFormat = DateFormat("dd-MM-yyyy");
+  late DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
 
     try {
-      selectedDate = DateTime.parse(controller.text);
+      _selectedDate = DateTime.parse(widget.controller.text);
+      widget.controller.text = _dateFormat.format(_selectedDate.toLocal());
     } on FormatException {
-      selectedDate = DateTime.now();
+      _selectedDate = DateTime.now();
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+    try {
+      _selectedDate = _dateFormat.parse(controller.text);
+    } on FormatException {
+      _selectedDate = DateTime.now();
     }
 
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: _selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now());
 
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != _selectedDate) {
       setState(() {
-        selectedDate = picked;
-        controller.text = DateFormat('dd-MM-yyyy').format(selectedDate.toLocal());
+        _selectedDate = picked;
+        controller.text = _dateFormat.format(_selectedDate.toLocal());
       });
     }
   }

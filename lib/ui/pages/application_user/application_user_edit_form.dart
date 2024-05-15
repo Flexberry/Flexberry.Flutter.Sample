@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:backend/backend.dart' as dto;
 
-import '../../../enums/gender.dart';
 import '../../../services/data_service.dart';
 import '../../widgets/flexberry_checkbox.dart';
 import '../../widgets/flexberry_dropdown.dart';
@@ -39,15 +38,23 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
       ),
       'Birth date': FormFieldParameters(
         TextEditingController(
-            text: widget.applicationUser?.birthday == null ? '' : widget.applicationUser?.birthday.toString()
+          text: widget.applicationUser?.birthday == null ? '' : widget.applicationUser?.birthday.toString()
         ),
         widget.applicationUser?.birthday == null ? '' : widget.applicationUser?.birthday.toString(),
       ),
+      'Gender': FormFieldParameters(
+        TextEditingController(
+          text: widget.applicationUser?.gender?.name ?? ''
+        ),
+        widget.applicationUser?.gender?.name ?? '',
+      ),
       'Karma': FormFieldParameters(
         TextEditingController(
-          text: widget.applicationUser?.karma == null ? '' : widget.applicationUser?.karma.toString(),
+          text: widget.applicationUser?.karma?.anyOf.values.values.firstOrNull == null ? '' :
+          widget.applicationUser?.karma?.anyOf.values.values.first.toString(),
         ),
-        widget.applicationUser?.karma == null ? '' : widget.applicationUser?.karma.toString(),
+        widget.applicationUser?.karma?.anyOf.values.values.firstOrNull == null ? '' :
+        widget.applicationUser?.karma?.anyOf.values.values.first.toString(),
       ),
       'Activated': FormFieldParameters(
         TextEditingController(
@@ -120,7 +127,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
               ),
             ),
             Text(
-              widget.applicationUser?.name ?? '',
+              widget.applicationUser?.primaryKey ?? '',
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -190,7 +197,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
               FlexberryDropdown(
                 controller: fields['Gender']!.controller,
                 label: 'Gender',
-                items: GenderEnum.values.map((e) => e.value).toList(),
+                items: dto.EmberFlexberryDummyGender.values.map((e) => e.name).toList(),
               ),
             ],
           ),

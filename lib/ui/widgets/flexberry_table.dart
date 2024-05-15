@@ -47,6 +47,7 @@ class _FlexberryTableState extends State<FlexberryTable> {
                     onTap: () {
                       NavigationManager.router.go(
                         '/${widget.editFormRoute}/${widget.viewModel.getPK(item)}',
+                        extra: item,
                       );
                     },
                     child: Column(

@@ -28,7 +28,7 @@ class _FlexberryDropdownState extends State<FlexberryDropdown> {
         height:  _isValidationFail ? 85 : 60,
         padding: const EdgeInsets.only(bottom: 10),
         child: DropdownButtonFormField<String>(
-          // value: widget.controller.value.text,
+          value: widget.controller.value.text,
           onChanged: widget.enabled ? (newValue){} : null,
           items: widget.items?.map((String value) {
             return DropdownMenuItem<String>(

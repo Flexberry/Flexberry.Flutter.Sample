@@ -55,9 +55,8 @@ class MyHttpOverrides extends HttpOverrides{
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  // const url = 'https://ember-stand.flexberry-foundation.ru/odata/';
-  const url = 'http://10.0.2.2:81/odata/';
-  // const url = 'http://localhost:81/odata/';
+  const url = 'https://ember-stand.flexberry-foundation.ru/odata/';
+
   const connectTimeout = 10000;
   const receiveTimeout = 30000;
 

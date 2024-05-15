@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class FlexberrySimpledatetime extends StatefulWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String label;
+  final bool validate;
   final bool enabled;
 
   const FlexberrySimpledatetime({
     super.key,
-    this.controller,
+    required this.controller,
     required this.label,
+    this.validate = false,
     this.enabled = true,
   });
 
@@ -17,17 +20,25 @@ class FlexberrySimpledatetime extends StatefulWidget {
 }
 
 class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
-  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+    DateTime selectedDate;
 
-  Future<void> _selectDate(BuildContext context) async {
+    try {
+      selectedDate = DateTime.parse(controller.text);
+    } on FormatException {
+      selectedDate = DateTime.now();
+    }
+
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now());
+
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+        controller.text = DateFormat('dd-MM-yyyy').format(selectedDate.toLocal());
       });
     }
   }
@@ -40,6 +51,14 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
         child: TextFormField(
           enabled: widget.enabled,
           autovalidateMode: AutovalidateMode.always,
+          validator: (value) {
+            if (widget.validate) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required';
+              }
+            }
+            return null;
+          },
           maxLines: 1,
           controller: widget.controller,
           style: const TextStyle(
@@ -47,6 +66,11 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
             fontWeight: FontWeight.w400,
           ),
           decoration: InputDecoration(
+            labelStyle: widget.enabled ? null : const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
             label: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -59,14 +83,13 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
                 ),
               ],
             ),
-            suffixIcon:
-            IconButton(
+            suffixIcon: IconButton(
               padding: const EdgeInsets.only(right: 10),
               icon: const Icon(
                 Icons.calendar_today,
                 size: 20,
               ),
-              onPressed: () => _selectDate(context),
+              onPressed: () => _selectDate(context, widget.controller),
             ),
             fillColor: Theme.of(context).colorScheme.background,
             border: OutlineInputBorder(

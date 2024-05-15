@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class FlexberryDropdown extends StatefulWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String label;
   final List<String>? items;
   final bool enabled;
 
   const FlexberryDropdown({
     super.key,
-    this.controller,
+    required this.controller,
     required this.label,
     this.items,
     this.enabled = true,

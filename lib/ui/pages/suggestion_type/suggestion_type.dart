@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../services/router_service.dart';
 import '../../../services/data_service.dart';
+import '../../../viewmodel/suggestion_type_view_model.dart';
+import '../../widgets/flexberry_table.dart';
 
 class SuggestionType extends StatefulWidget {
   final DataService dataService;
@@ -13,43 +14,31 @@ class SuggestionType extends StatefulWidget {
 }
 
 class _SuggestionTypeState extends State<SuggestionType> {
-  String _userData = 'Загрузка...';
+  late SuggestionTypeViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    _loadSuggestionTypeData();
   }
 
-  Future<void> _loadUserData() async {
+  Future<void> _loadSuggestionTypeData() async {
     try {
       final userData = await widget.dataService.getSuggestionTypes();
       setState(() {
-        _userData = userData.toString();
+        viewModel = SuggestionTypeViewModel(userData);
       });
     } catch (e) {
       setState(() {
-        _userData = 'Ошибка: $e';
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () => NavigationManager.router.go(
-              '/suggestion_type/edit-form/1',
-            ),
-            child: Text('Переход на эдит форму'),
-          ),
-          SizedBox(height: 16.0),
-          Text(_userData),
-        ],
-      ),
+    return FlexberryTable(
+      viewModel: viewModel,
+      editFormRoute: 'suggestion_type/edit-form',
     );
   }
 }

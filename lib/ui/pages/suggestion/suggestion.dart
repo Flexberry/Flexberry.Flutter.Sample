@@ -18,10 +18,10 @@ class _SuggestionState extends State<Suggestion> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    _loadSuggestionData();
   }
 
-  Future<void> _loadUserData() async {
+  Future<void> _loadSuggestionData() async {
     try {
       final userData = await widget.dataService.getSuggestions();
       setState(() {

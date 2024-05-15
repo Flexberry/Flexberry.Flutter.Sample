@@ -13,7 +13,7 @@ class Suggestion extends StatefulWidget {
 }
 
 class _SuggestionState extends State<Suggestion> {
-  String _userData = 'Загрузка...';
+  String _suggestionData = 'Загрузка...';
 
   @override
   void initState() {
@@ -25,11 +25,11 @@ class _SuggestionState extends State<Suggestion> {
     try {
       final userData = await widget.dataService.getSuggestions();
       setState(() {
-        _userData = userData.toString();
+        _suggestionData = userData.toString();
       });
     } catch (e) {
       setState(() {
-        _userData = 'Ошибка: $e';
+        _suggestionData = 'Ошибка: $e';
       });
     }
   }
@@ -47,7 +47,7 @@ class _SuggestionState extends State<Suggestion> {
             child: Text('Переход на эдит форму'),
           ),
           SizedBox(height: 16.0),
-          Text(_userData),
+          Text(_suggestionData),
         ],
       ),
     );

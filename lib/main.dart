@@ -1,4 +1,6 @@
 // Openapi Generator last run: : 2024-05-08T12:15:36.398982
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
@@ -43,8 +45,18 @@ class Application extends StatelessWidget {
   }
 }
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
 void main() {
-  const url = 'http://localhost:6500/odata/';
+  HttpOverrides.global = MyHttpOverrides();
+  const url = 'https://ember-stand.flexberry-foundation.ru/odata/';
+
   const connectTimeout = 10000;
   const receiveTimeout = 30000;
 

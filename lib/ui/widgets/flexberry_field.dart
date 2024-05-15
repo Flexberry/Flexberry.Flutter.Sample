@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class FlexberryField extends StatelessWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final String label;
   final bool validate;
   final bool enabled;
 
   const FlexberryField({
     super.key,
-    this.controller,
+    required this.controller,
     required this.label,
     this.validate = false,
     this.enabled = true,

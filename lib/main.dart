@@ -44,7 +44,7 @@ class Application extends StatelessWidget {
 }
 
 void main() {
-  const url = 'http://localhost:6500/odata/';
+  const url = 'https://ember-stand.flexberry-foundation.ru/odata/';
   const connectTimeout = 10000;
   const receiveTimeout = 30000;
 

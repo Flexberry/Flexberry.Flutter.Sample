@@ -48,6 +48,9 @@ class HomePage extends StatelessWidget {
                   icon: Icons.dashboard,
                   title: 'Suggestions',
                   onTap: () {
+                    final branchIndex = NavigationManager.findBranchIndex('/suggestion');
+                    NavigationManager.updateSelectedIndex(branchIndex);
+                    NavigationManager.router.go('/suggestion');
                   },
                 ),
                 CardWidget(

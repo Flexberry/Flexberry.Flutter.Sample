@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../ui/pages/application_user/application_user.dart';
 import '../ui/pages/application_user/application_user_edit_form.dart';
+import '../ui/pages/suggestion/suggestion.dart';
+import '../ui/pages/suggestion/suggestion_edit_form.dart';
 import '../ui/pages/bottom_navigation_page.dart';
 import '../ui/pages/home_page.dart';
 import 'data_service.dart';
@@ -16,6 +18,7 @@ class NavigationManager {
   final GlobalKey<NavigatorState> parentNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> homeTabNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> applicationUserTabNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> suggestionTabNavigatorKey = GlobalKey<NavigatorState>();
 
   NavigationManager._internal();
 
@@ -84,6 +87,29 @@ class NavigationManager {
                 builder: (context, state) => ApplicationUserEditForm(
                   dataService: _dataService,
                   applicationUserId: state.pathParameters['id'].toString(),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        navigatorKey: suggestionTabNavigatorKey,
+        routes: [
+          GoRoute(
+            path: '/suggestion',
+            pageBuilder: (context, GoRouterState state) {
+              return getPage(
+                child: Suggestion(dataService: _dataService),
+                state: state,
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'edit-form/:id',
+                builder: (context, state) => SuggestionEditForm(
+                  dataService: _dataService,
+                  suggestionId: state.pathParameters['id'].toString(),
                 ),
               ),
             ],

@@ -24,7 +24,7 @@ class _FlexberryCheckboxState extends State<FlexberryCheckbox> {
     super.initState();
 
     try {
-      _isSelected = bool.parse(widget.controller.text);
+      _isSelected = bool.parse(widget.controller.value.text);
     } on FormatException {
       _isSelected = false;
     }

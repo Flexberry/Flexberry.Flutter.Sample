@@ -33,6 +33,7 @@ class _FlexberryDropdownState extends State<FlexberryDropdown> {
           items: widget.items?.map((String value) {
             return DropdownMenuItem<String>(
               onTap:  (){
+                widget.controller.text = value;
               },
               value: value,
               child: Text(

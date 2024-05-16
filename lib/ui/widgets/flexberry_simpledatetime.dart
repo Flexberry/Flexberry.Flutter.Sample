@@ -20,7 +20,9 @@ class FlexberrySimpledatetime extends StatefulWidget {
 }
 
 class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
-  final DateFormat _dateFormat = DateFormat("dd-MM-yyyy");
+  final DateFormat _dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+  final DateFormat _dateFormatDisplay = DateFormat("dd-MM-yyyy");
+  final TextEditingController _controllerDisplay = TextEditingController();
   late DateTime _selectedDate;
 
   @override
@@ -28,16 +30,17 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
     super.initState();
 
     try {
-      _selectedDate = DateTime.parse(widget.controller.text);
-      widget.controller.text = _dateFormat.format(_selectedDate.toLocal());
+      _selectedDate = DateTime.parse(widget.controller.value.text);
+      _controllerDisplay.text = _dateFormatDisplay.format(_selectedDate.toLocal());
     } on FormatException {
       _selectedDate = DateTime.now();
+      _controllerDisplay.text = '';
     }
   }
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
     try {
-      _selectedDate = _dateFormat.parse(controller.text);
+      _selectedDate = _dateFormatDisplay.parse(controller.value.text);
     } on FormatException {
       _selectedDate = DateTime.now();
     }
@@ -51,7 +54,8 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        controller.text = _dateFormat.format(_selectedDate.toLocal());
+        controller.text = _dateFormatDisplay.format(_selectedDate.toLocal());
+        widget.controller.text = _dateFormat.format(_selectedDate.toLocal());
       });
     }
   }
@@ -73,7 +77,7 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
             return null;
           },
           maxLines: 1,
-          controller: widget.controller,
+          controller: _controllerDisplay,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
@@ -102,7 +106,7 @@ class _FlexberrySimpledatetimeState extends State<FlexberrySimpledatetime> {
                 Icons.calendar_today,
                 size: 20,
               ),
-              onPressed: () => _selectDate(context, widget.controller),
+              onPressed: () => _selectDate(context, _controllerDisplay),
             ),
             fillColor: Theme.of(context).colorScheme.background,
             border: OutlineInputBorder(

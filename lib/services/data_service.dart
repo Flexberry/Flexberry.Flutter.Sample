@@ -21,6 +21,7 @@ class DataService {
   // TODO написать правильный метод
   Future<List<EmberFlexberryDummySuggestionsApi>> getSuggestions() async {
     final res = await api.getEmberFlexberryDummySuggestionsApi().emberFlexberryDummySuggestionsGet();
+
     return res.data?.value?.whereType<EmberFlexberryDummySuggestionsApi>().toList() ?? [];
   }
 
@@ -44,4 +45,12 @@ class DataService {
     return res.data ?? EmberFlexberryDummySuggestionType();
   }
 
+  Future<void> patchUser(
+    String userId,
+    EmberFlexberryDummyApplicationUserUpdate emberFlexberryDummyApplicationUserUpdate) async {
+    await api.getEmberFlexberryDummyApplicationUsersApi()
+        .emberFlexberryDummyApplicationUsersPrimaryKeyPatch(
+          primaryKey: userId,
+          emberFlexberryDummyApplicationUserUpdate: emberFlexberryDummyApplicationUserUpdate);
+  }
 }

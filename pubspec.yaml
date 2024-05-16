@@ -12,6 +12,7 @@ dependencies:
 
   dio: ^5.4.0
   english_words: ^4.0.0
+  one_of: ^1.5.0
   provider: ^6.0.0
   flutter_feather_icons: ^2.0.0
   go_router: ^14.0.2

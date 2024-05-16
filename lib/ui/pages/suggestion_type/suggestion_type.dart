@@ -24,9 +24,9 @@ class _SuggestionTypeState extends State<SuggestionType> {
 
   Future<void> _loadSuggestionTypeData() async {
     try {
-      final userData = await widget.dataService.getSuggestionTypes();
+      final suggestionTypeData = await widget.dataService.getSuggestionTypes();
       setState(() {
-        viewModel = SuggestionTypeViewModel(userData);
+        viewModel = SuggestionTypeViewModel(suggestionTypeData);
       });
     } catch (e) {
       setState(() {

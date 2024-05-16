@@ -90,6 +90,7 @@ class NavigationManager {
                 path: 'edit-form/:id',
                 builder: (context, state) => ApplicationUserEditForm(
                   dataService: _dataService,
+                  applicationUserId: state.pathParameters['id'].toString(),
                   applicationUser: state.extra as EmberFlexberryDummyApplicationUser,
                 ),
               ),

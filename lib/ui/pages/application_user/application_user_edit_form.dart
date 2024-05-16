@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:backend/backend.dart' as dto;
+import 'package:one_of/any_of.dart';
 
 import '../../../services/data_service.dart';
 import '../../widgets/flexberry_checkbox.dart';
@@ -10,11 +11,13 @@ import '../../../utils/form_field_parameters.dart';
 
 class ApplicationUserEditForm extends StatefulWidget {
   final DataService dataService;
+  final String applicationUserId;
   final dto.EmberFlexberryDummyApplicationUser? applicationUser;
 
   const ApplicationUserEditForm({
     super.key,
     required this.dataService,
+    required this.applicationUserId,
     required this.applicationUser
   });
 
@@ -23,6 +26,7 @@ class ApplicationUserEditForm extends StatefulWidget {
 }
 
 class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late Map<String, FormFieldParameters> fields;
 
   @override
@@ -127,7 +131,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
               ),
             ),
             Text(
-              widget.applicationUser?.primaryKey ?? '',
+              widget.applicationUserId,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -144,7 +148,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: FilledButton.icon(
-              onPressed: () => {},
+              onPressed: () => _save(),
               icon: const Icon(Icons.save),
               label: const Text('Save'),
             ),
@@ -162,8 +166,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _profileForm(),
-                      _contactInformationForm()
+                      _getForm(),
                     ],
                   ),
                 ),
@@ -175,11 +178,12 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
     );
   }
 
-  Form _profileForm() {
+  Form _getForm() {
     return Form(
+      key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Text('Profile', style: const TextStyle(fontSize: 18.0)),
           FlexberryField(
             controller: fields['Name']!.controller,
@@ -218,16 +222,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
 
-  Form _contactInformationForm() {
-    return Form(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
           Text('Contact Information', style: TextStyle(fontSize: 18.0)),
           FlexberryField(
             controller: fields['Phone1']!.controller,
@@ -273,5 +268,54 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
         ],
       ),
     );
+  }
+
+  _save() {
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
+
+    if (!_isAnyFieldChanged()) return;
+
+    dto.EmberFlexberryDummyApplicationUserUpdateBuilder builder = dto
+      .EmberFlexberryDummyApplicationUserUpdateBuilder();
+
+    dto.EmberFlexberryDummyApplicationUserKarmaBuilder userKarmaBuilder = dto
+      .EmberFlexberryDummyApplicationUserKarmaBuilder()
+      ..anyOf = AnyOfDynamic(
+        values: {
+          0: int.parse(fields['Karma']!.controller.value.text),
+        },
+        types: [
+          int,
+          String,
+        ]
+      );
+
+    builder
+      ..name = fields['Name']!.controller.value.text
+      ..birthday = DateTime.parse(fields['Birth date']!.controller.value.text).toUtc()
+      ..gender = dto.EmberFlexberryDummyGender.valueOf(fields['Gender']!.controller.value.text)
+      ..karma = userKarmaBuilder
+      ..activated = bool.parse(fields['Activated']!.controller.value.text)
+      ..vip = bool.parse(fields['VIP']!.controller.value.text)
+      ..phone1 = fields['Phone1']!.controller.value.text
+      ..phone2 = fields['Phone2']!.controller.value.text
+      ..phone3 = fields['Phone3']!.controller.value.text
+      ..eMail = fields['E-Mail']!.controller.value.text
+      ..VK = fields['VK']!.controller.value.text
+      ..facebook = fields['Facebook']!.controller.value.text
+      ..twitter = fields['Twitter']!.controller.value.text;
+
+    dto.EmberFlexberryDummyApplicationUserUpdate emberFlexberryDummyApplicationUserUpdate = builder.build();
+    widget.dataService.patchUser(widget.applicationUserId, emberFlexberryDummyApplicationUserUpdate);
+  }
+
+  bool _isAnyFieldChanged() {
+    return fields.entries
+        .map((e) => e.value)
+        .any((field) {
+            var temp = (field.initialValue != field.controller.value.text);
+            return temp;
+          });
   }
 }

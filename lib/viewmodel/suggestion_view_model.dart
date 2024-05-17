@@ -22,4 +22,9 @@ class SuggestionViewModel extends ViewModel<EmberFlexberryDummySuggestionsApi> {
     // return item..emberFlexberryDummySuggestionsPrimaryKeyGet(primaryKey: primaryKey).primaryKey;
   }
 
+  @override
+  Future<bool?> deleteRecord(item) async {
+    // need to change EmberFlexberryDummySuggestionsApi to correct model for suggestion.
+    return dataService?.deleteSuggestionType(""/*item.primaryKey.toString()*/);
+  }
 }

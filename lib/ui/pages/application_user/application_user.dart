@@ -26,7 +26,7 @@ class _ApplicationUserState extends State<ApplicationUser> {
     try {
       final userData = await widget.dataService.getUsers();
       setState(() {
-        viewModel = ApplicationUserViewModel(userData);
+        viewModel = ApplicationUserViewModel(userData, widget.dataService);
       });
     } catch (e) {}
   }

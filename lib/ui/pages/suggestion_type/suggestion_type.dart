@@ -26,7 +26,7 @@ class _SuggestionTypeState extends State<SuggestionType> {
     try {
       final suggestionTypeData = await widget.dataService.getSuggestionTypes();
       setState(() {
-        viewModel = SuggestionTypeViewModel(suggestionTypeData);
+        viewModel = SuggestionTypeViewModel(suggestionTypeData, widget.dataService);
       });
     } catch (e) {
       setState(() {

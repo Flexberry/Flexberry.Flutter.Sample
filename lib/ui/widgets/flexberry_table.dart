@@ -78,7 +78,10 @@ class _FlexberryTableState extends State<FlexberryTable> {
                           icon: const Icon(
                             FeatherIcons.trash2,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            await widget.viewModel.deleteRecord(item);
+                            widget.onRefresh();
+                          },
                         ),
                       ),
                     ],

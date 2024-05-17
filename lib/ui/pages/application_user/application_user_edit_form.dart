@@ -28,6 +28,8 @@ class ApplicationUserEditForm extends StatefulWidget {
 class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late Map<String, FormFieldParameters> fields;
+  String _savedButtonLabel = 'Save';
+  IconData _savedButtonIcon = Icons.save;
 
   @override
   void initState() {
@@ -149,8 +151,8 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
             padding: const EdgeInsets.only(right: 16.0),
             child: FilledButton.icon(
               onPressed: () => _save(),
-              icon: const Icon(Icons.save),
-              label: const Text('Save'),
+              icon: Icon(_savedButtonIcon),
+              label: Text(_savedButtonLabel),
             ),
           ),
         ],
@@ -270,7 +272,7 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
     );
   }
 
-  _save() {
+  Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
 
@@ -291,9 +293,13 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
         ]
       );
 
+    final birthDateText = fields['Birth date']!.controller.value.text;
+
     builder
       ..name = fields['Name']!.controller.value.text
-      ..birthday = DateTime.parse(fields['Birth date']!.controller.value.text).toUtc()
+      ..birthday = birthDateText.isNotEmpty
+        ? DateTime.parse(birthDateText).toUtc()
+        : null
       ..gender = dto.EmberFlexberryDummyGender.valueOf(fields['Gender']!.controller.value.text)
       ..karma = userKarmaBuilder
       ..activated = bool.parse(fields['Activated']!.controller.value.text)
@@ -308,6 +314,25 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
 
     dto.EmberFlexberryDummyApplicationUserUpdate emberFlexberryDummyApplicationUserUpdate = builder.build();
     widget.dataService.patchUser(widget.applicationUserId, emberFlexberryDummyApplicationUserUpdate);
+
+    try {
+      await widget.dataService.patchUser(
+        widget.applicationUserId,
+        emberFlexberryDummyApplicationUserUpdate,
+      );
+
+      setState(() {
+        _savedButtonLabel = 'Saved';
+        _savedButtonIcon = Icons.check;
+      });
+      await Future.delayed(const Duration(seconds: 3));
+      setState(() {
+        _savedButtonLabel = 'Save';
+        _savedButtonIcon = Icons.save;
+      });
+    } catch (e) {
+
+    }
   }
 
   bool _isAnyFieldChanged() {

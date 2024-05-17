@@ -14,7 +14,7 @@ class ApplicationUser extends StatefulWidget {
 }
 
 class _ApplicationUserState extends State<ApplicationUser> {
-  late ApplicationUserViewModel viewModel;
+  ApplicationUserViewModel? viewModel;
 
   @override
   void initState() {
@@ -33,9 +33,15 @@ class _ApplicationUserState extends State<ApplicationUser> {
 
   @override
   Widget build(BuildContext context) {
+    if (viewModel == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return FlexberryTable(
-      viewModel: viewModel,
+      viewModel: viewModel!,
       editFormRoute: 'application-user/edit-form',
+      onRefresh: _loadUserData,
     );
   }
 }

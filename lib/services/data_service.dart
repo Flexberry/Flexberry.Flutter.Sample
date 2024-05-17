@@ -54,6 +54,12 @@ class DataService {
           emberFlexberryDummyApplicationUserUpdate: emberFlexberryDummyApplicationUserUpdate);
   }
 
+  Future<EmberFlexberryDummyApplicationUser?> postUser(EmberFlexberryDummyApplicationUserCreate user) async {
+  final res = await api.getEmberFlexberryDummyApplicationUsersApi()
+      .emberFlexberryDummyApplicationUsersPost(emberFlexberryDummyApplicationUserCreate: user);
+  return res.data;
+}
+
   Future<bool> deleteUser(String userId) async {
     await api.getEmberFlexberryDummyApplicationUsersApi()
         .emberFlexberryDummyApplicationUsersPrimaryKeyDelete(primaryKey: userId);

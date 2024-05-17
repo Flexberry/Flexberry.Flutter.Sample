@@ -44,6 +44,7 @@ class _SuggestionTypeState extends State<SuggestionType> {
     return FlexberryTable(
       viewModel: viewModel!,
       editFormRoute: 'suggestion_type/edit-form',
+      createFormRoute: 'suggestion_type/create-form',
       onRefresh: _loadSuggestionTypeData,
     );
   }

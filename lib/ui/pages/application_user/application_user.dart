@@ -41,6 +41,7 @@ class _ApplicationUserState extends State<ApplicationUser> {
     return FlexberryTable(
       viewModel: viewModel!,
       editFormRoute: 'application-user/edit-form',
+      createFormRoute: 'application-user/create-form',
       onRefresh: _loadUserData,
     );
   }

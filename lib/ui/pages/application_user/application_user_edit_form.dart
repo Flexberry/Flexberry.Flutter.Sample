@@ -13,12 +13,14 @@ class ApplicationUserEditForm extends StatefulWidget {
   final DataService dataService;
   final String applicationUserId;
   final dto.EmberFlexberryDummyApplicationUser? applicationUser;
+  final bool isCreating;
 
   const ApplicationUserEditForm({
     super.key,
     required this.dataService,
     required this.applicationUserId,
-    required this.applicationUser
+    required this.applicationUser,
+    this.isCreating = false,
   });
 
   @override
@@ -203,7 +205,11 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
               FlexberryDropdown(
                 controller: fields['Gender']!.controller,
                 label: 'Gender',
-                items: dto.EmberFlexberryDummyGender.values.map((e) => e.name).toList(),
+                items: Map.fromIterable(
+                  dto.EmberFlexberryDummyGender.values,
+                  key: (e) => e.name,
+                  value: (e) => e.name,
+                ),
               ),
             ],
           ),
@@ -285,12 +291,14 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
       .EmberFlexberryDummyApplicationUserKarmaBuilder()
       ..anyOf = AnyOfDynamic(
         values: {
-          0: int.parse(fields['Karma']!.controller.value.text),
+          0: fields['Karma']!.controller.value.text.isNotEmpty
+              ? int.parse(fields['Karma']!.controller.value.text)
+              : 0,
         },
         types: [
           int,
           String,
-        ]
+        ],
       );
 
     final birthDateText = fields['Birth date']!.controller.value.text;
@@ -302,8 +310,12 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
         : null
       ..gender = dto.EmberFlexberryDummyGender.valueOf(fields['Gender']!.controller.value.text)
       ..karma = userKarmaBuilder
-      ..activated = bool.parse(fields['Activated']!.controller.value.text)
-      ..vip = bool.parse(fields['VIP']!.controller.value.text)
+      ..activated = fields['Activated']!.controller.value.text.isNotEmpty
+        ? bool.parse(fields['Activated']!.controller.value.text)
+        : false
+      ..vip = fields['VIP']!.controller.value.text.isNotEmpty
+        ? bool.parse(fields['VIP']!.controller.value.text)
+        : false
       ..phone1 = fields['Phone1']!.controller.value.text
       ..phone2 = fields['Phone2']!.controller.value.text
       ..phone3 = fields['Phone3']!.controller.value.text
@@ -313,7 +325,12 @@ class _ApplicationUserEditFormState extends State<ApplicationUserEditForm> {
       ..twitter = fields['Twitter']!.controller.value.text;
 
     dto.EmberFlexberryDummyApplicationUserUpdate emberFlexberryDummyApplicationUserUpdate = builder.build();
-    widget.dataService.patchUser(widget.applicationUserId, emberFlexberryDummyApplicationUserUpdate);
+
+    if (widget.isCreating) {
+      await widget.dataService.postUser(dto.EmberFlexberryDummyApplicationUserCreate());
+    } else {
+      await widget.dataService.patchUser(widget.applicationUserId, emberFlexberryDummyApplicationUserUpdate);
+    }
 
     try {
       await widget.dataService.patchUser(

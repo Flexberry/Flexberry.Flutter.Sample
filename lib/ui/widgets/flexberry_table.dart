@@ -7,6 +7,7 @@ import '../../viewmodel/view_model.dart';
 class FlexberryTable extends StatefulWidget {
   final ViewModel viewModel;
   final String editFormRoute;
+  final String createFormRoute;
   final bool enabled;
   final VoidCallback onRefresh;
 
@@ -14,6 +15,7 @@ class FlexberryTable extends StatefulWidget {
     super.key,
     required this.viewModel,
     required this.editFormRoute,
+    required this.createFormRoute,
     this.enabled = true,
     required this.onRefresh,
   });
@@ -35,6 +37,16 @@ class _FlexberryTableState extends State<FlexberryTable> {
               IconButton(
                 icon: const Icon(FeatherIcons.refreshCw),
                 onPressed: widget.onRefresh,
+              ),
+              const SizedBox(width: 8.0),
+              IconButton(
+                icon: const Icon(FeatherIcons.plus),
+                onPressed: () {
+                  NavigationManager.router.go(
+                              '/${widget.editFormRoute}/new',
+                              extra: null,
+                            );
+                },
               ),
             ],
           ),

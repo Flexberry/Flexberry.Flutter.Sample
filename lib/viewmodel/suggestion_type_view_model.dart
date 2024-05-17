@@ -2,11 +2,16 @@ import 'package:backend/backend.dart';
 import 'package:flexberry_flutter_sample/viewmodel/view_model.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../services/data_service.dart';
+
 class SuggestionTypeViewModel extends ViewModel<EmberFlexberryDummySuggestionType> {
   @override
   List<EmberFlexberryDummySuggestionType> data;
 
-  SuggestionTypeViewModel(this.data);
+  @override
+  DataService? dataService;
+
+  SuggestionTypeViewModel(this.data, this.dataService);
 
   @override
   List<Widget> buildList(item) {
@@ -22,4 +27,8 @@ class SuggestionTypeViewModel extends ViewModel<EmberFlexberryDummySuggestionTyp
     return item.primaryKey;
   }
 
+  @override
+  Future<bool?> deleteRecord(item) async {
+    return dataService?.deleteSuggestion(item.primaryKey.toString());
+  }
 }

@@ -53,4 +53,25 @@ class DataService {
           primaryKey: userId,
           emberFlexberryDummyApplicationUserUpdate: emberFlexberryDummyApplicationUserUpdate);
   }
+
+  Future<bool> deleteUser(String userId) async {
+    await api.getEmberFlexberryDummyApplicationUsersApi()
+        .emberFlexberryDummyApplicationUsersPrimaryKeyDelete(primaryKey: userId);
+
+    return true;
+  }
+
+  Future<bool> deleteSuggestion(String suggId) async {
+    await api.getEmberFlexberryDummySuggestionsApi()
+        .emberFlexberryDummySuggestionsPrimaryKeyDelete(primaryKey: suggId);
+
+    return true;
+  }
+
+  Future<bool> deleteSuggestionType(String suggId) async {
+    await api.getEmberFlexberryDummySuggestionTypesApi()
+        .emberFlexberryDummySuggestionTypesPrimaryKeyDelete(primaryKey: suggId);
+
+    return true;
+  }
 }

@@ -11,9 +11,26 @@
 - Списковую форму
 - Навигацию
 
+## Необходимые инструменты
+
+- IDE (лучше всего Visual Studio Code)
+- [Flutter SDK](https://docs.flutter.dev/get-started/install)
+- [Flutter plugin для Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) (соответствующие плагины есть также для Android Studio и IntelliJ IDEA)
+- ПО в соответствии с выбранной платформой разработки:
+  - Visual Studio для платформы Windows
+  - Xcode для платформы macOS
+  - Android SDK для android
+  - Chrome для web
+
+> [!TIP]
+> Проверить, установлено ли все необходимое: `flutter doctor -v`
+>
+
 > [!NOTE]
 > Установить пакеты: `flutter pub get`
 >
+
+Более подробную информацию можно посмотреть в [официальной документации](https://docs.flutter.dev/get-started/install) или наглядно увидеть в [туториале](https://codelabs.developers.google.com/codelabs/flutter-codelab-first#0).
 
 ## Ответы на вопросы, которые прозвучали на Disconf mini:
 
